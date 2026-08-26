@@ -1,0 +1,39 @@
+# Dependencies and generated output
+/node_modules/
+/output/
+/dist/
+/coverage/
+/.cache/
+/tmp/
+/test-results/
+/screenshots/
+
+# Local agent and QA state (root only; nested test fixtures remain tracked)
+/.claude/
+/.codex/
+/.impeccable/
+/.playwright-cli/
+/.superpowers/
+
+# Environment, credentials, and local certificates
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Logs and operating-system files
+*.log
+*.pid
+*.diff
+*.patch
+.DS_Store
+Thumbs.db
+
+# Editor-local state
+.idea/
+.vscode/
+*.swp
+*.swo

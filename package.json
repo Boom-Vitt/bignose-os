@@ -1,0 +1,25 @@
+{
+  "name": "bignose-os",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "BIGNOSE OS local read-only dashboard for Claude Code, Codex, skills, routines, jobs and workspace memory.",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "scan": "node server/lib/scanner.js --once",
+    "install-hooks": "node hooks/install.js",
+    "fonts": "curl -sSL -o /tmp/Outfit-var.ttf 'https://raw.githubusercontent.com/google/fonts/main/ofl/outfit/Outfit%5Bwght%5D.ttf' && curl -sSL -o public/fonts/OFL.txt 'https://raw.githubusercontent.com/google/fonts/main/ofl/outfit/OFL.txt' && node -e \"const w=require('wawoff2'),f=require('fs');w.compress(f.readFileSync('/tmp/Outfit-var.ttf')).then(b=>f.writeFileSync('public/fonts/Outfit-var.woff2',Buffer.from(b)))\""
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "chokidar": "^3.6.0",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "wawoff2": "^2.0.1"
+  }
+}

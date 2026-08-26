@@ -1,0 +1,7 @@
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Claude provider marker</title>
+  <circle cx="48" cy="48" r="42" fill="#090910" stroke="#FF7A1A" stroke-width="4"/>
+  <circle cx="48" cy="48" r="32" stroke="#FF7A1A" stroke-opacity="0.28" stroke-width="2"/>
+  <path d="M28 36V60M68 36V60" stroke="#FF7A1A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M36 60V36L48 50L60 36V60" stroke="#FFE0CA" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

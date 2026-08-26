@@ -1,0 +1,323 @@
+/* ============================================================
+   BIGNOSE OS — design tokens
+   Semantic aliases may be extended by an approved design specification.
+   Never hardcode a color outside this file.
+   Visual language follows the reference agent-OS dashboard:
+   near-black ground, hex tiling, single orange accent,
+   monoline icons, uppercase letter-spaced labels.
+   ============================================================ */
+
+:root {
+  /* ---- ground & surfaces (OS shell) ---- */
+  --bg:            #0A0A0B;
+  --bg-2:          #0E0E10;
+  --panel:         #121214;
+  --panel-2:       #17171A;
+  --panel-hover:   #1D1D21;
+  --hair:          #232327;
+  --hair-2:        #2E2E34;
+
+  /* ---- ink ---- */
+  --ink:           #F2F2F0;
+  --ink-2:         #9A9A9E;
+  --ink-3:         #66666C;
+  --ink-4:         #3E3E44;
+
+  /* ---- the one accent ---- */
+  --accent:        #F26B21;
+  --accent-hi:     #FF8544;
+  --accent-dim:    #A8471339;
+  --accent-glow:   #F26B2166;
+
+  /* ---- provider identity + routed instrument semantics ---- */
+  --provider-claude: #F26B21;
+  --provider-codex:  #22C3C9;
+  --route-neutral:   var(--brain-hair);
+  --route-focus:     var(--ink);
+  --rail:            var(--hair-2);
+  --junction:        var(--ink-3);
+  --focus-ring:      var(--accent-hi);
+  --layer-panel:     var(--panel);
+  --layer-popover:   var(--brain-panel);
+
+  /* ---- semantic status ---- */
+  --ok:            #4FBF6A;
+  --warn:          #E0A32E;
+  --crit:          #E2564A;
+  --idle:          #55555B;
+
+  /* ---- model badge hues (skills deck) ---- */
+  --m-opus:        #F26B21;
+  --m-sonnet:      #5B8DEF;
+  --m-fable:       #B37AE8;
+  --m-haiku:       #45C2B1;
+
+  /* ---- Second Brain: ground ---- */
+  --brain-bg:      #050408;
+  --brain-disc-1:  #241443;
+  --brain-disc-2:  #150C28;
+  --brain-disc-3:  #08050F;
+  --brain-panel:   #131A2Bec;
+  --brain-hair:    #2A3348;
+
+  /* ---- Second Brain: repeated geometry ---- */
+  --brain-rule:                1px;
+  --brain-accent-rule:         2px;
+  --brain-accent-rule-strong:  3px;
+  --brain-space-xxs:           2px;
+  --brain-space-3:             3px;
+  --brain-space-4:             4px;
+  --brain-space-5:             5px;
+  --brain-space-xs:            6px;
+  --brain-space-7:             7px;
+  --brain-space-sm:            8px;
+  --brain-space-9:             9px;
+  --brain-space-10:            10px;
+  --brain-space-11:            11px;
+  --brain-space-12:            12px;
+  --brain-space-13:            13px;
+  --brain-space-md:            14px;
+  --brain-space-15:            15px;
+  --brain-space-16:            16px;
+  --brain-space-17:            17px;
+  --brain-space-lg:            18px;
+  --brain-space-22:            22px;
+  --brain-space-xl:            24px;
+  --brain-space-26:            26px;
+  --brain-space-32:            32px;
+  --brain-space-36:            36px;
+  --brain-space-42:            42px;
+  --brain-space-48:            48px;
+  --brain-space-52:            52px;
+  --brain-space-86:            86px;
+  --brain-space-96:            96px;
+  --brain-page-gutter:         clamp(var(--brain-space-lg), 4vw, 52px);
+  --brain-results-gutter:      clamp(var(--brain-space-lg), 3vw, var(--brain-space-36));
+  --brain-details-gutter:      clamp(var(--brain-space-22), 4vw, var(--brain-space-48));
+  --brain-state-offset:        clamp(var(--brain-space-32), 10vh, var(--brain-space-96));
+  --brain-promise-size:        clamp(var(--t-xl), 2.8vw, var(--t-2xl));
+  --brain-touch-target:        40px;
+  --brain-result-touch-target: 56px;
+  --brain-category-height:     34px;
+  --brain-content-height:      480px;
+  --brain-result-type-width:   64px;
+  --brain-trail-focus-width:   150px;
+  --brain-trail-direction-height: 27px;
+  --brain-trail-focus-height:  78px;
+  --brain-content-results-width: 300px;
+  --brain-content-details-width: 420px;
+  --brain-compact-results-width: 280px;
+  --brain-compact-details-width: 390px;
+  --brain-promise-width:       760px;
+  --brain-detail-copy-width:   700px;
+  --brain-state-width:         680px;
+  --brain-state-inline-inset:  36px;
+  --brain-pill-radius:         999px;
+  --brain-track-tight:         -.02em;
+  --brain-track-subtle:        .02em;
+  --brain-track-meta:          .04em;
+  --brain-track-utility:       .08em;
+  --brain-track-type:          .09em;
+  --brain-track-provider:      .12em;
+
+  /* ---- Second Brain: optional semantic Map ---- */
+  --brain-map-height:          min(76vh, 760px);
+  --brain-map-narrow-height:   420px;
+  --brain-map-rail-width:      320px;
+  --brain-map-svg-label-size:  2px; /* SVG user units in the 100 × 100 viewBox */
+  --brain-map-orbit-size:      min(84vw, calc(100vh - 128px), 900px);
+  --brain-map-core-size:       clamp(86px, 12vw, 116px);
+  --brain-map-provider-size:   clamp(62px, 8vw, 82px);
+  --brain-map-node-size:       clamp(25px, 3.2vw, 36px);
+  --brain-map-node-focus-size: clamp(38px, 4.6vw, 52px);
+  --brain-map-rail-inset:      clamp(14px, 3vw, 32px);
+  --brain-map-rail-max-height: min(68vh, 620px);
+  --brain-map-cyan:            #22C3C9;
+  --brain-map-blue:            #4C9BE8;
+  --brain-map-violet:          #9B6DD7;
+  --brain-map-magenta:         #D857C8;
+  --brain-map-gold:            #E5A83C;
+  --brain-map-green:           #45C2B1;
+  --brain-map-shadow:          #000000B8;
+  --brain-map-glass:           #0A0912D9;
+  --brain-map-glass-strong:    #101426F2;
+  --brain-map-grid:            #22C3C916;
+  --brain-map-drawer-width:    min(390px, 92vw);
+  --brain-map-drawer-head:     244px;
+
+  /* ---- Second Brain: progressive filesystem structure ---- */
+  --brain-structure-width:         980px;
+  --brain-structure-height:        var(--brain-structure-width);
+  --brain-structure-active-width:  var(--brain-structure-width);
+  --brain-structure-active-height: var(--brain-structure-height);
+  --brain-structure-core-size:     96px;
+  --brain-structure-provider-size: 80px;
+  --brain-structure-folder-size:   48px;
+  --brain-structure-file-size:     40px;
+  --brain-structure-semantic-size: 40px;
+  --brain-structure-lane-gap:      64px;
+  --brain-structure-label-gap:     8px;
+  --brain-structure-vertical-label-max: 92px;
+  --brain-structure-vertical-label-reveal-max: 210px;
+  --brain-role-core:               var(--accent);
+  --brain-role-skills:             var(--brain-map-violet);
+  --brain-role-memory:             var(--brain-map-magenta);
+  --brain-role-routines:           var(--brain-map-gold);
+  --brain-role-applications:       var(--brain-map-green);
+  --brain-role-other:              var(--brain-map-blue);
+
+  /* ---- Second Brain: rings ---- */
+  --ring-core:     #F26B21;
+  --ring-skills:   #F26B21;
+  --ring-memory:   #C77DE8;
+  --ring-routines: #E5A83C;
+  --ring-apps:     #4C9BE8;
+
+  /* ---- Second Brain: departments ---- */
+  --dep-business:  #9B6DD7;
+  --dep-content:   #D857C8;
+  --dep-community: #2F8FE8;
+  --dep-product:   #22C3C9;
+  --dep-personal:  #E8C93C;
+
+  /* ---- type ---- */
+  /* Outfit — the reference product's actual face (verified from its own
+     <link> to fonts.googleapis.com). OFL, self-hosted as woff2; we never
+     call the CDN. Doto is used for numerals in the reference; optional here.
+     Do NOT reintroduce "Avenir Next"/"Futura": the first is macOS-bundled
+     and not web-licensed, the second is a single-storey-'a' face that would
+     sit behind a double-storey one and swap letterform skeletons per OS. */
+  --f-ui:   "Outfit", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --t-micro: 11px;
+  --t-tiny:  11px;
+  --t-label: 11.5px;
+  --t-body:  13px;
+  --t-lg:    15px;
+  --t-xl:    19px;
+  --t-2xl:   26px;
+  --t-clock: 44px;
+
+  --track-label: .18em;   /* uppercase section labels */
+  --track-wide:  .34em;   /* ring labels, wordmark */
+
+  /* ---- geometry ---- */
+  --r-sm: 2px;
+  --r-md: 4px;
+  --r-lg: 8px;
+  --gap:  14px;
+  --pad:  18px;
+
+  /* ---- hex tiling (OS shell background) ---- */
+  --hex-stroke: #17171B;
+  --hex-size:   34px;
+
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+/* Single-theme by design: this is a dark instrument panel.
+   Painted explicitly so it holds on any host ground. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-ui);
+  font-size: var(--t-body);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+/* ---- shared primitives every view uses ---- */
+
+.label {
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-2);
+  font-weight: 600;
+}
+.label-dim { color: var(--ink-3); }
+.accent    { color: var(--accent); }
+.mono      { font-family: var(--f-mono); }
+.tnum      { font-variant-numeric: tabular-nums; }
+
+.hairline { height: 1px; background: var(--hair); border: 0; margin: 0; }
+
+.btn {
+  font-family: var(--f-ui);
+  font-size: var(--t-tiny);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-sm);
+  padding: 7px 12px;
+  cursor: pointer;
+  transition: border-color .15s var(--ease), color .15s var(--ease), background .15s var(--ease);
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn[aria-pressed="true"], .btn.is-on {
+  background: var(--ink); color: var(--bg); border-color: var(--ink);
+}
+.btn-accent { border-color: var(--accent); color: var(--accent); }
+.btn-accent:hover { background: var(--accent); color: #12100E; }
+
+.btn-run {
+  width: 22px; height: 18px;
+  display: grid; place-items: center;
+  border: 1px solid var(--accent); border-radius: var(--r-sm);
+  background: transparent; color: var(--accent);
+  cursor: pointer; padding: 0;
+}
+.btn-run:hover { background: var(--accent); color: #12100E; }
+
+.btn-icon {
+  width: 22px; height: 18px;
+  display: grid; place-items: center;
+  border: 1px solid var(--hair-2); border-radius: var(--r-sm);
+  background: transparent; color: var(--ink-3);
+  cursor: pointer; padding: 0;
+}
+.btn-icon:hover { border-color: var(--ink-2); color: var(--ink); }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: var(--t-micro);
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 999px;
+  border: 1px solid var(--hair-2); color: var(--ink-2);
+}
+.pill-accent { border-color: var(--accent); color: var(--accent); }
+
+:focus-visible { outline: 1px solid var(--focus-ring); outline-offset: 2px; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--hair-2); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-4); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---- self-hosted face (no CDN; run `npm run fonts` to fetch) ---- */
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-var.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block; /* block, not swap — a FOUT swaps letterform skeletons */
+}
+
+/* Outfit's figures are proportional by default, so a live clock reflows every
+   second without this. Its 'tnum' feature is functional (verified). */
+.tnum, .clock, .count {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}

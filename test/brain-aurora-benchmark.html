@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signal Aurora DPR 2 Benchmark</title>
+  <link rel="stylesheet" href="../public/css/tokens.css">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px;
+      background: var(--brain-bg);
+      color: var(--ink);
+      font-family: var(--f-ui);
+    }
+
+    main {
+      display: grid;
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      color: var(--accent);
+      font-size: var(--t-xl);
+      letter-spacing: var(--track-label);
+      text-transform: uppercase;
+    }
+
+    #dpr-warning {
+      padding: 12px;
+      border: 1px solid var(--warn);
+      color: var(--warn);
+      font-family: var(--f-mono);
+    }
+
+    #stage {
+      width: 1200px;
+      min-height: 800px;
+      overflow: hidden;
+      border: 1px solid var(--brain-hair);
+      background: var(--brain-bg);
+    }
+
+    #stage canvas {
+      display: block;
+      width: 1200px;
+      height: 800px;
+    }
+
+    #output {
+      min-height: 12em;
+      margin: 0;
+      padding: 16px;
+      overflow: auto;
+      border: 1px solid var(--brain-hair);
+      background: var(--panel);
+      color: var(--ink-2);
+      font-family: var(--f-mono);
+      font-size: var(--t-tiny);
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Signal Aurora benchmark</h1>
+    <p id="protocol-note">
+      Acceptance requires DPR 2. The protocol alternates AB/BA order, times performance.now() directly around renderer.draw()
+      submission, and reports max(0, auraP95 − baselineP95). Aura states are prebuilt before timing; each twelve-pair block
+      yields before timing and alternates its first arm. Forced one-pixel readback was removed because it dominated and reversed
+      the workload (about 246 ms at 1,300 nodes versus 37 ms at 3,500) instead of measuring frame submission.
+    </p>
+    <p id="dpr-warning" role="status" aria-live="polite">Checking device pixel ratio…</p>
+    <section id="stage" aria-label="1200 by 800 benchmark canvas"></section>
+    <pre id="output" aria-live="polite">Running 30 alternating AB/BA warm-up pairs and 120 frame-submission samples per arm for the 1,300- and 3,500-node fixtures…</pre>
+  </main>
+
+  <script type="module">
+    import { createRenderer } from '../public/js/graph-render.js';
+    import { layoutRings } from '../public/js/graph-layout.js';
+    import {
+      measureAlternatingPair,
+      measurementBlocks,
+      prebuildStates,
+      summarizeFixture,
+    } from './brain-aurora-benchmark-protocol.mjs';
+
+    const RINGS = ['skills', 'memory', 'routines', 'applications'];
+
+    function makeFixture(count) {
+      const nodes = [{
+        id: 'agent-core', label: 'AGENT CORE', ring: 'core', kind: 'dir', depth: 0, files: count,
+      }];
+      for (let index = 1; index < count; index++) {
+        const ring = RINGS[index % RINGS.length];
+        nodes.push({
+          id: `node-${index}`, label: `node-${index}`, ring, kind: 'dir', depth: 1,
+          files: index % 23, department: ring === 'memory' ? 'PRODUCT' : null,
+        });
+      }
+      const counts = {};
+      for (const node of nodes) counts[node.ring] = (counts[node.ring] || 0) + 1;
+      const geom = { width: 1200, height: 800, cx: 450, cy: 404, radius: 348, counts };
+      const opts = { ...geom, spin: 0, spacing: 11, springs: 0.35 };
+      return { nodes, positions: layoutRings(nodes, opts), geom, opts };
+    }
+
+    function stateFor(data, aurora) {
+      return {
+        nodes: data.nodes,
+        positions: data.positions,
+        geom: data.geom,
+        opts: data.opts,
+        view: { x: 0, y: 0, k: 1 },
+        hover: null,
+        selected: null,
+        showLabels: false,
+        viewMode: 'departments',
+        layout: 'rings',
+        dimIds: null,
+        aurora,
+      };
+    }
+
+    async function measure(count) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1200;
+      canvas.height = 800;
+      canvas.style.width = '1200px';
+      canvas.style.height = '800px';
+      canvas.setAttribute('aria-label', `${count}-node Signal Aurora benchmark`);
+      document.querySelector('#stage').append(canvas);
+      let maxOps = { gradients: 0, arcs: 0, sprites: 0 };
+      const renderer = createRenderer(canvas, {
+        onAuraOps(ops) {
+          maxOps = {
+            gradients: Math.max(maxOps.gradients, ops.gradients),
+            arcs: Math.max(maxOps.arcs, ops.arcs),
+            sprites: Math.max(maxOps.sprites, ops.sprites),
+          };
+        },
+      });
+      const data = makeFixture(count);
+      const baseline = stateFor(data, null);
+      const animated = (progress) => stateFor(data, {
+        enabled: true,
+        ringSweep: { kind: 'load', progress, allowNodeSparks: count <= 3500 },
+        coreFlash: 0.7,
+        selectedCorona: 0,
+        hoverBloom: 0,
+        spinPhase: progress * Math.PI * 2,
+        staticOnly: false,
+      });
+      const warmAuraStates = prebuildStates(30,
+        (index) => animated((index + 1) / 30));
+      const measuredAuraStates = prebuildStates(120,
+        (index) => animated((index + 1) / 120));
+      for (let index = 0; index < 30; index++) {
+        measureAlternatingPair(index, {
+          baseline: () => renderer.draw(baseline),
+          aura: () => renderer.draw(warmAuraStates[index]),
+        });
+      }
+      const baselineTimes = [];
+      const auraTimes = [];
+      for (const block of measurementBlocks(120, 12)) {
+        await new Promise(requestAnimationFrame);
+        for (const index of block) {
+          const { baselineMs, auraMs } = measureAlternatingPair(index, {
+            baseline: () => renderer.draw(baseline),
+            aura: () => renderer.draw(measuredAuraStates[index]),
+          });
+          baselineTimes.push(baselineMs);
+          auraTimes.push(auraMs);
+        }
+      }
+      renderer.destroy();
+      canvas.remove();
+      return summarizeFixture(baselineTimes, auraTimes, maxOps);
+    }
+
+    const dprWarning = document.querySelector('#dpr-warning');
+    dprWarning.textContent = window.devicePixelRatio === 2
+      ? 'DPR 2 detected — timing can be evaluated against the acceptance gate.'
+      : `NON-ACCEPTANCE: DPR ${window.devicePixelRatio} detected; timing is diagnostic only and cannot satisfy the DPR 2 gate.`;
+
+    const result = { dpr: window.devicePixelRatio, fixtures: {} };
+    for (const count of [1300, 3500]) result.fixtures[count] = await measure(count);
+    window.__AURORA_BENCHMARK__ = result;
+    document.querySelector('#stage').hidden = true;
+    document.querySelector('#output').textContent = JSON.stringify(result, null, 2);
+  </script>
+</body>
+</html>

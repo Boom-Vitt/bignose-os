@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="BIGNOSE OS — local read-only structure viewer for .claude and .codex. No API key required.">
+  <title>BIGNOSE OS</title>
+
+  <!-- No favicon request: this app must run fully offline with zero stray fetches. -->
+  <link rel="icon" href="data:,">
+
+  <!-- Order matters: tokens define every custom property the other two consume.
+       brain.css belongs to slice G and may not exist yet — a 404 on a stylesheet
+       is harmless and the shell renders regardless. -->
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/shell.css">
+  <link rel="stylesheet" href="/css/brain.css">
+</head>
+<body>
+  <!--
+    Hexagon tiling ground (DESIGN.md §The look).
+
+    Two measured constraints drive this markup:
+
+    1. INTEGER TILE. The tile is 102 x 59 px. A flat-top hexagon of radius
+       R = 34px (= --hex-size) tiles at 3R x sqrt(3)R = 102 x 58.89…; the exact
+       irrational height banded rows by ~1%, so the height is rounded to a whole
+       59px and the geometry is derived from that integer.
+
+    2. THREE EDGES PER HEXAGON, NOT SIX. A closed hexagon double-paints every
+       shared edge and the seams are visible. Each hexagon therefore draws only
+       its three UPPER edges (upper-left, top, upper-right); the lower three are
+       supplied by its neighbours, so every edge in the lattice is painted
+       exactly once. The five paths below are the hexagons whose upper edges
+       intersect one tile — no two of them overlap, and the horizontal edges
+       land at y=15 and y=44.5, clear of the tile boundary where a coincident
+       stroke would seam.
+
+    The stroke colour is set from --hex-stroke in shell.css: this is a live DOM
+    <svg>, not a data: URI, precisely so a CSS custom property can reach it.
+    A solid dim stroke — never a low-alpha one, whose thin edges round away
+    against antialias coverage.
+  -->
+  <svg class="hexfield" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="hexfield-tile" width="102" height="59" patternUnits="userSpaceOnUse">
+        <g class="hexfield-edges" fill="none" stroke-width="1" stroke-linecap="square">
+          <path d="M-34 15 L-17 -14.5 L17 -14.5 L34 15"/>
+          <path d="M68 15 L85 -14.5 L119 -14.5 L136 15"/>
+          <path d="M17 44.5 L34 15 L68 15 L85 44.5"/>
+          <path d="M-34 74 L-17 44.5 L17 44.5 L34 74"/>
+          <path d="M68 74 L85 44.5 L119 44.5 L136 74"/>
+        </g>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#hexfield-tile)"/>
+  </svg>
+
+  <!-- Views render themselves into here; app.js owns the routing. -->
+  <div id="app" class="shell"></div>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>
