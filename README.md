@@ -1,3 +1,15 @@
+<!-- BBN:HEADER:START -->
+<div align="center">
+
+<img src=".github/brand/banner.svg" width="100%" alt="BIGNOSE OS — Local-first, read-only command center for Claude and Codex" />
+
+<a href="https://github.com/Boom-Vitt/bignose-os/stargazers"><img src="https://img.shields.io/github/stars/Boom-Vitt/bignose-os?style=flat-square&color=14b8a6&labelColor=0b1220" alt="stars" /></a>
+<a href="https://github.com/Boom-Vitt/bignose-os/commits/main"><img src="https://img.shields.io/github/last-commit/Boom-Vitt/bignose-os?style=flat-square&color=14b8a6&labelColor=0b1220" alt="last commit" /></a>
+<a href="https://github.com/Boom-Vitt"><img src="https://img.shields.io/badge/by-BoomBigNose-14b8a6?style=flat-square&labelColor=0b1220" alt="by BoomBigNose" /></a>
+
+</div>
+<!-- BBN:HEADER:END -->
+
 # BIGNOSE OS
 
 ศูนย์ควบคุม AI agent ในเครื่องสำหรับ Claude และ Codex ที่ตอบคำถามสำคัญให้ผู้ใช้ได้ทันทีว่า:
@@ -101,3 +113,15 @@ Repository แบบ Public นี้มีเฉพาะ source code คู่
 BIGNOSE OS เผยแพร่ภายใต้ [MIT License](LICENSE) ทุกคนสามารถ clone, ใช้งาน และดัดแปลงได้ตามเงื่อนไขของใบอนุญาต ส่วนฟอนต์ Outfit ใช้ใบอนุญาต SIL Open Font License ที่แนบไว้ใน `public/fonts/OFL.txt`
 
 BIGNOSE OS เป็นโครงการอิสระและไม่ได้เป็นผลิตภัณฑ์ที่รับรองโดย Anthropic หรือ OpenAI ชื่อและเครื่องหมาย Claude, Codex, Anthropic และ OpenAI เป็นทรัพย์สินของเจ้าของแต่ละราย โปรดอ่าน [NOTICE.md](NOTICE.md) สำหรับขอบเขตของ assets จากบุคคลที่สาม
+
+<!-- BBN:FOOTER:START -->
+---
+
+<div align="center">
+
+**สร้างโดย [BoomBigNose](https://github.com/Boom-Vitt)** · [Kruoop.com](https://kruoop.com) แหล่งเรียน AI + คอมมูนิตี้ · [Seeneo.ai](https://seeneo.ai) · [YouTube 220K](https://www.youtube.com/@BoomBigNose)
+
+<sub>ถ้าโปรเจกต์นี้มีประโยชน์ กด ⭐ ให้กำลังใจกันได้เลย</sub>
+
+</div>
+<!-- BBN:FOOTER:END -->
